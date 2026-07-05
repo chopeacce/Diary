@@ -13,9 +13,10 @@
 <meta name="apple-mobile-web-app-title" content="365 일기장">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Gowun+Batang&family=Gaegu:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
 <style>
 :root{
+  --font:'IBM Plex Sans KR',-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
   --bg:#E4E2DD;
   --ink:#21201F;
   --card:#F4F3EF;
@@ -33,11 +34,14 @@ html{font-size:16px}
 body{
   background:var(--bg);
   color:var(--ink);
-  font-family:'Gowun Dodum',-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
+  font-family:var(--font);
   min-height:100vh;
   display:flex;justify-content:center;
 }
-.num{font-family:'Nunito','Gowun Dodum',sans-serif;font-weight:900}
+.num{font-family:'Nunito',var(--font);font-weight:900}
+body.f-batang{--font:'Gowun Batang','Apple SD Gothic Neo',serif}
+body.f-gaegu{--font:'Gaegu','Apple SD Gothic Neo',sans-serif}
+body.f-gaegu{font-size:1.06em}
 .app{width:100%;max-width:440px;padding:20px 18px 90px}
 
 /* header */
@@ -104,6 +108,17 @@ button{font-family:inherit;color:var(--ink);cursor:pointer;border:none;backgroun
   text-align:center;color:var(--sub);font-size:.85rem;padding:26px 10px;line-height:1.7;
 }
 
+/* font picker */
+.fontrow{margin-top:22px;display:flex;align-items:center;gap:8px;justify-content:center}
+.fontlabel{font-size:.72rem;color:var(--sub)}
+.fontopt{
+  font-size:.78rem;padding:8px 14px;border-radius:12px;background:var(--card);
+  border:1.5px solid var(--line);font-family:inherit;color:var(--ink);
+}
+.fontopt.sel{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.fontopt[data-font=batang]{font-family:'Gowun Batang',serif}
+.fontopt[data-font=gaegu]{font-family:'Gaegu',sans-serif}
+
 /* footer */
 .foot{margin-top:26px;display:flex;gap:8px;justify-content:center}
 .foot button,.foot label{
@@ -163,6 +178,34 @@ textarea{min-height:120px;resize:vertical;line-height:1.7}
 .delbtn{width:54px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);font-size:1rem}
 .savebtn:active,.delbtn:active{transform:scale(.97)}
 
+/* quote box */
+.quotebtn{font-size:.72rem;color:var(--ink);border:1.5px solid var(--line);background:var(--card);padding:4px 10px;border-radius:10px;font-family:inherit}
+.quotebtn:active{transform:scale(.95)}
+.quotebox{
+  background:var(--card);border:1.5px solid var(--ink);border-radius:16px;
+  padding:14px 16px;margin-bottom:10px;
+}
+.quotebox p{font-size:.88rem;line-height:1.8;margin-bottom:10px}
+.quoteacts{display:flex;gap:6px}
+.quoteacts button{
+  font-size:.72rem;padding:7px 11px;border-radius:10px;font-family:inherit;
+  border:1.5px solid var(--line);background:var(--bg);color:var(--ink);
+}
+.quoteacts button:first-child{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* lightbox */
+.lightbox{
+  position:fixed;inset:0;background:rgba(33,32,31,.92);z-index:30;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.lightbox.on{opacity:1;pointer-events:auto}
+.lightbox img{max-width:100%;max-height:92vh;border-radius:14px}
+.lightbox .close{
+  position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;
+  background:var(--bg);color:var(--ink);font-size:1.1rem;
+}
+
 /* detail view */
 .detail .oneline-big{font-size:1.15rem;line-height:1.6;margin:14px 0 4px}
 .detail .body{font-size:.92rem;line-height:1.9;color:#4A4842;white-space:pre-wrap;margin-top:12px}
@@ -205,6 +248,13 @@ textarea{min-height:120px;resize:vertical;line-height:1.7}
     <div id="recentList"></div>
   </div>
 
+  <div class="fontrow">
+    <span class="fontlabel">글씨체</span>
+    <button class="fontopt" data-font="plex">깔끔</button>
+    <button class="fontopt" data-font="batang">명조</button>
+    <button class="fontopt" data-font="gaegu">손글씨</button>
+  </div>
+
   <div class="foot">
     <button id="exportBtn">백업 내보내기</button>
     <label for="importFile">백업 가져오기</label>
@@ -222,8 +272,16 @@ textarea{min-height:120px;resize:vertical;line-height:1.7}
   <div class="fieldlabel"><span>오늘 하루 한 줄 요약</span><span id="olCount">0/40</span></div>
   <input type="text" id="edOneline" maxlength="40" placeholder="예: 드디어 이삿짐 다 쌌다!">
   <div class="gap"></div>
-  <div class="fieldlabel"><span>더 쓰고 싶은 이야기 (선택)</span></div>
-  <textarea id="edBody" placeholder="쓰고 싶은 만큼만."></textarea>
+  <div class="fieldlabel"><span>더 쓰고 싶은 이야기 (선택)</span><button type="button" class="quotebtn" id="quoteBtn">✦ 글귀 뽑기</button></div>
+  <div class="quotebox" id="quoteBox" hidden>
+    <p id="quoteText"></p>
+    <div class="quoteacts">
+      <button type="button" id="quoteAgain">다시 뽑기</button>
+      <button type="button" id="quoteUse">본문에 넣기</button>
+      <button type="button" id="quoteClose">닫기</button>
+    </div>
+  </div>
+  <textarea id="edBody" placeholder="쓰고 싶은 만큼만. 쓸 말이 없으면 위에서 글귀를 뽑아봐."></textarea>
   <div class="fieldlabel" style="margin-top:16px"><span>사진 (최대 4장)</span></div>
   <div class="photos" id="edPhotos"></div>
   <input type="file" id="photoInput" accept="image/*" multiple hidden>
@@ -249,6 +307,11 @@ textarea{min-height:120px;resize:vertical;line-height:1.7}
   <div class="sheetbtns">
     <button class="savebtn" id="editBtn">수정하기</button>
   </div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="close" aria-label="닫기">✕</button>
+  <img id="lightboxImg" src="" alt="사진 크게 보기">
 </div>
 
 <div class="toast" id="toast"></div>
@@ -479,6 +542,107 @@ function toast(msg){
   const t=$('toast'); t.textContent=msg; t.classList.add('on');
   clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('on'),2200);
 }
+
+/* ---------- quotes ---------- */
+const QUOTES = [
+  "천천히 가도 괜찮아. 멈추지만 않으면 돼. — 공자",
+  "행복은 습관이다. 그것을 몸에 지녀라. — 허버드",
+  "가장 어두운 밤도 끝나고, 해는 떠오른다. — 빅토르 위고",
+  "삶이 있는 한 희망은 있다. — 키케로",
+  "오늘 걷지 않으면 내일은 뛰어야 한다.",
+  "작은 성취를 축하할 줄 아는 사람이 큰 일을 해낸다.",
+  "네가 세상에서 보고 싶은 변화가 되어라. — 간디",
+  "행동은 모든 성공의 가장 기초적인 열쇠다. — 피카소",
+  "지금 이 순간에도 나는 자라고 있다.",
+  "완벽한 때를 기다리지 마라. 때는 결코 완벽하지 않다. — 나폴레온 힐",
+  "쉬어가는 것도 여정의 일부다.",
+  "비교는 기쁨을 훔쳐가는 도둑이다. — 시어도어 루스벨트",
+  "어제의 나보다 나은 오늘의 나면 충분하다.",
+  "별을 보려면 어둠이 필요하다.",
+  "실패는 성공으로 가는 이정표다. — C.S. 루이스",
+  "당신이 할 수 있다고 믿든 없다고 믿든, 믿는 대로 된다. — 헨리 포드",
+  "기록은 기억을 이긴다.",
+  "가장 개인적인 것이 가장 창의적인 것이다. — 마틴 스코세이지",
+  "느린 것을 두려워하지 말고, 멈추는 것을 두려워하라. — 중국 속담",
+  "마음이 향하는 곳에 길이 있다.",
+  "무언가를 시작하기에 너무 늦은 때란 없다. — 조지 엘리엇",
+  "오늘 하루도 나에게 주어진 선물이다.",
+  "고요한 바다는 유능한 뱃사람을 만들지 못한다. — 아프리카 속담",
+  "글로 남긴 하루는 두 번 산 하루다.",
+  "자신을 사랑하는 법을 아는 것이 가장 위대한 사랑이다.",
+  "위대한 일은 작은 일들이 모여 이루어진다. — 반 고흐",
+  "내일은 내일의 태양이 뜬다. — 바람과 함께 사라지다",
+  "행복을 미루지 마라. 지금 여기에 있다.",
+  "산다는 것, 그것은 치열한 전투이다. — 로맹 롤랑",
+  "당신의 하루하루가 당신의 인생이 된다.",
+  "물이 깊을수록 소리가 없다.",
+  "지나간 일에 새 눈물을 낭비하지 마라. — 에우리피데스",
+  "한 걸음이라도 내디뎠다면 그날은 성공이다.",
+  "꾸준함은 재능을 이긴다.",
+  "당신이 웃으면 세상도 함께 웃는다.",
+  "쓸 말이 없는 날도, 살아낸 하루다."
+];
+let lastQuote = -1;
+function pickQuote(){
+  let i;
+  do { i = Math.floor(Math.random()*QUOTES.length); } while(i===lastQuote && QUOTES.length>1);
+  lastQuote = i;
+  $('quoteText').textContent = QUOTES[i];
+}
+$('quoteBtn').addEventListener('click',()=>{ pickQuote(); $('quoteBox').hidden=false; });
+$('quoteAgain').addEventListener('click',pickQuote);
+$('quoteClose').addEventListener('click',()=>$('quoteBox').hidden=true);
+$('quoteUse').addEventListener('click',()=>{
+  const q = $('quoteText').textContent;
+  const b = $('edBody');
+  b.value = b.value ? b.value.replace(/\s*$/,'') + '\n\n' + q : q;
+  toast('본문에 넣었어 ✓');
+});
+
+/* ---------- lightbox ---------- */
+const lb = $('lightbox');
+function openLightbox(src){ $('lightboxImg').src = src; lb.classList.add('on'); }
+lb.addEventListener('click',()=>{ lb.classList.remove('on'); });
+document.addEventListener('click',e=>{
+  const img = e.target;
+  if(img.tagName==='IMG' && (img.closest('#dtPhotos') || img.closest('#edPhotos'))){
+    openLightbox(img.src);
+  }
+});
+
+/* ---------- swipe (calendar) ---------- */
+let touchX=null, touchY=null;
+const gridEl = $('grid');
+gridEl.addEventListener('touchstart',e=>{
+  touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
+},{passive:true});
+gridEl.addEventListener('touchend',e=>{
+  if(touchX===null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  const dy = e.changedTouches[0].clientY - touchY;
+  if(Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)*1.5){
+    if(dx < 0){ viewM++; if(viewM>11){viewM=0;viewY++;} }
+    else { viewM--; if(viewM<0){viewM=11;viewY--;} }
+    render();
+  }
+  touchX = touchY = null;
+},{passive:true});
+
+/* ---------- font picker ---------- */
+const FONT_KEY='diary365.font';
+function applyFont(f){
+  document.body.classList.remove('f-batang','f-gaegu');
+  if(f==='batang') document.body.classList.add('f-batang');
+  if(f==='gaegu') document.body.classList.add('f-gaegu');
+  document.querySelectorAll('.fontopt').forEach(b=>b.classList.toggle('sel', b.dataset.font===f));
+  try{ localStorage.setItem(FONT_KEY, f); }catch(e){}
+}
+document.querySelectorAll('.fontopt').forEach(b=>{
+  b.addEventListener('click',()=>applyFont(b.dataset.font));
+});
+let savedFont='plex';
+try{ savedFont = localStorage.getItem(FONT_KEY)||'plex'; }catch(e){}
+applyFont(savedFont);
 
 render();
 </script>
