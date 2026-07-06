@@ -1,4 +1,4 @@
-const CACHE_NAME = 'diary365-v3';
+const CACHE_NAME = 'diary365-v6';
 const ASSETS = [
   './',
   './index.html',

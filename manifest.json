@@ -1,12 +1,12 @@
 {
-  "name": "365 일기장",
-  "short_name": "365",
-  "description": "쓰고 싶은 날만 쓰는 일기장",
+  "name": "Only Girls Diary",
+  "short_name": "OG Diary",
+  "description": "A diary for the days you feel like writing",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#E4E2DD",
-  "theme_color": "#E4E2DD",
+  "background_color": "#F3ECDD",
+  "theme_color": "#F3ECDD",
   "orientation": "portrait-primary",
   "icons": [
     {

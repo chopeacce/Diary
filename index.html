@@ -1,293 +1,396 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>365 일기장</title>
+<title>Only Girls Diary</title>
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#E4E2DD">
+<meta name="theme-color" content="#F3ECDD">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="365 일기장">
+<meta name="apple-mobile-web-app-title" content="Only Girls Diary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Gowun+Batang&family=Gaegu:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500&family=Nunito:wght@800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&family=Special+Elite&family=Caveat:wght@500;600&family=Gowun+Batang&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
 <style>
 :root{
-  --font:'IBM Plex Sans KR',-apple-system,'Apple SD Gothic Neo','Noto Sans KR',sans-serif;
-  --bg:#E4E2DD;
-  --ink:#21201F;
-  --card:#F4F3EF;
-  --line:#D2CFC7;
-  --sub:#8B877E;
-  --m1:#E8B94F; /* 최고 */
-  --m2:#9CAF88; /* 좋아 */
-  --m3:#C9C2B2; /* 무난 */
-  --m4:#9AA9BC; /* 별로 */
-  --m5:#C58063; /* 힘듦 */
-  --radius:22px;
+  --paper:#F3ECDD;
+  --paper2:#FAF5E9;
+  --red:#B23A2C;
+  --red-deep:#8E2B20;
+  --ink:#4A3E31;
+  --line:#DCCDB6;
+  --sub:#A08D74;
+  --m1:#C08A3E; --m2:#8E9455; --m3:#C3AC86; --m4:#7E93A8; --m5:#B14A3C;
+  --font:'Special Elite','Gowun Batang',serif;
+  --display:'Playfair Display','Gowun Batang',serif;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{font-size:14px}
 body{
-  background:var(--bg);
+  background:var(--paper);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .38 0 0 0 0 .28 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
   color:var(--ink);
   font-family:var(--font);
   min-height:100vh;
   display:flex;justify-content:center;
 }
-.num{font-family:'Nunito',var(--font);font-weight:900}
-body.f-batang{--font:'Gowun Batang','Apple SD Gothic Neo',serif}
-body.f-gaegu{--font:'Gaegu','Apple SD Gothic Neo',sans-serif}
-body.f-gaegu{font-size:1.06em}
-.app{width:100%;max-width:440px;padding:20px 18px 90px}
+body.f-serif{--font:'Gowun Batang',serif}
+body.f-script{--font:'Caveat','Nanum Pen Script',cursive;font-size:1.16em}
 
-/* header */
-header{display:flex;align-items:center;gap:10px;padding:6px 2px 18px}
-header img{width:34px;height:34px;border-radius:9px}
-header h1{font-size:.95rem;letter-spacing:.02em;flex:1}
-header .hint{font-size:.72rem;color:var(--sub)}
+/* ---- ornate letter frame ---- */
+.app{
+  width:100%;max-width:440px;margin:12px 10px 92px;position:relative;
+  border:1.5px solid var(--red);outline:1px solid var(--red);outline-offset:-7px;
+  padding:34px 20px 30px;background:transparent;
+}
+.corner{position:absolute;width:46px;height:46px;color:var(--red);pointer-events:none}
+.corner.tl{top:-8px;left:-8px}
+.corner.tr{top:-8px;right:-8px;transform:scaleX(-1)}
+.corner.bl{bottom:-8px;left:-8px;transform:scaleY(-1)}
+.corner.br{bottom:-8px;right:-8px;transform:scale(-1,-1)}
 
-/* month nav */
-.monthbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.monthbar .label{font-size:1.3rem;letter-spacing:.01em}
-.monthbar .label .num{font-size:1.35rem}
-.navbtns{display:flex;gap:8px}
+/* ---- header ---- */
+header{text-align:center;margin-bottom:6px}
+header .kicker{
+  font-size:.68rem;letter-spacing:.35em;color:var(--red);text-transform:uppercase;
+  margin-bottom:6px;
+}
+header h1{
+  font-family:var(--display);font-style:italic;font-weight:700;
+  font-size:1.9rem;color:var(--red);line-height:1.15;
+}
+.flourish{display:block;margin:10px auto 18px;color:var(--red);width:170px;height:22px}
+
+/* ---- month bar ---- */
+.monthbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.monthbar .label{font-family:var(--display);font-style:italic;font-size:1.25rem;color:var(--red-deep)}
+.navbtns{display:flex;gap:7px}
 button{font-family:inherit;color:var(--ink);cursor:pointer;border:none;background:none}
 .iconbtn{
-  width:38px;height:38px;border-radius:13px;background:var(--card);
-  border:1.5px solid var(--line);font-size:1rem;line-height:1;
+  width:34px;height:34px;border-radius:50%;background:var(--paper2);
+  border:1.5px solid var(--red);color:var(--red);font-size:.95rem;line-height:1;
 }
-.iconbtn:active{transform:scale(.94)}
-.todaybtn{height:38px;padding:0 13px;border-radius:13px;background:var(--ink);color:var(--bg);font-size:.8rem}
+.iconbtn:active{transform:scale(.93)}
+.todaybtn{
+  height:34px;padding:0 13px;border-radius:17px;background:var(--red);color:var(--paper2);
+  font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+}
 
-/* calendar */
-.weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:6px}
-.weekdays span{text-align:center;font-size:.7rem;color:var(--sub);padding:4px 0}
-.weekdays span:first-child{color:var(--m5)}
-.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+/* ---- calendar ---- */
+.weekdays{display:grid;grid-template-columns:repeat(7,1fr);margin-bottom:5px}
+.weekdays span{text-align:center;font-size:.66rem;color:var(--red);letter-spacing:.05em;padding:3px 0}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .cell{
-  aspect-ratio:.82;border-radius:16px;display:flex;flex-direction:column;
-  align-items:center;justify-content:flex-start;padding-top:7px;gap:3px;
-  border:1.5px solid transparent;position:relative;
+  aspect-ratio:.82;display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-start;padding-top:6px;gap:3px;position:relative;
+  border:1px solid transparent;border-radius:6px;
 }
 .cell:not(.empty){cursor:pointer}
-.cell .d{font-size:.78rem;line-height:1;color:var(--ink)}
-.cell.other .d{color:#B9B5AB}
-.cell.today{border-color:var(--ink)}
-.cell .face{width:26px;height:26px}
-.cell .placeholder{width:26px;height:26px;border-radius:9px;background:rgba(33,32,31,.05)}
+.cell .d{font-size:.74rem;line-height:1}
+.cell.today{border-color:var(--red)}
+.cell .face{width:24px;height:24px}
+.cell .placeholder{width:24px;height:24px;border-radius:6px;background:rgba(178,58,44,.06)}
 .cell:not(.empty):active{transform:scale(.93)}
-.cell .camdot{position:absolute;right:5px;top:5px;width:6px;height:6px;border-radius:50%;background:var(--ink);opacity:.55}
+.cell .camdot{position:absolute;right:4px;top:4px;width:5px;height:5px;border-radius:50%;background:var(--red);opacity:.6}
 
-/* month summary strip */
+/* ---- strip / recent ---- */
 .strip{
-  margin-top:18px;background:var(--card);border:1.5px solid var(--line);
-  border-radius:var(--radius);padding:14px 16px;font-size:.82rem;color:var(--sub);
-  display:flex;align-items:center;gap:10px;
+  margin-top:16px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:12px 4px;font-size:.78rem;color:var(--sub);text-align:center;line-height:1.7;
 }
-.strip b{color:var(--ink);font-weight:normal}
-.strip .num{font-size:1.05rem}
-
-/* recent list */
-.recent{margin-top:22px}
-.recent h2{font-size:.85rem;color:var(--sub);margin-bottom:10px;font-weight:normal}
+.strip b{color:var(--red-deep);font-weight:normal}
+.recent{margin-top:18px}
+.recent h2,.qna-list h2{
+  font-size:.66rem;color:var(--red);letter-spacing:.3em;text-transform:uppercase;
+  margin-bottom:12px;font-weight:normal;text-align:center;
+}
 .entrycard{
-  background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);
-  padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:center;cursor:pointer;
+  background:var(--paper2);border:1px solid var(--line);border-radius:8px;
+  padding:12px 14px;margin-bottom:9px;display:flex;gap:11px;align-items:center;cursor:pointer;
 }
 .entrycard:active{transform:scale(.98)}
-.entrycard .face{width:38px;height:38px;flex-shrink:0}
+.entrycard .face{width:34px;height:34px;flex-shrink:0}
 .entrycard .txt{flex:1;min-width:0}
-.entrycard .date{font-size:.7rem;color:var(--sub);margin-bottom:3px}
-.entrycard .oneline{font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.entrycard .thumb{width:44px;height:44px;border-radius:12px;object-fit:cover;flex-shrink:0}
-.emptymsg{
-  text-align:center;color:var(--sub);font-size:.85rem;padding:26px 10px;line-height:1.7;
+.entrycard .date{font-size:.66rem;color:var(--sub);margin-bottom:3px;letter-spacing:.04em}
+.entrycard .oneline{font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.emptymsg{text-align:center;color:var(--sub);font-size:.8rem;padding:22px 8px;line-height:1.9}
+
+/* ---- postage-stamp photos ---- */
+.stampthumb{
+  width:46px;height:46px;flex-shrink:0;background:var(--paper2);padding:4px;
+  border:1px dashed var(--red);object-fit:cover;
+}
+.photos{display:flex;gap:9px;flex-wrap:wrap;margin-top:8px}
+.photos .ph{position:relative}
+.photos img{
+  width:74px;height:74px;object-fit:cover;background:var(--paper2);
+  padding:4px;border:1px dashed var(--red);
+}
+.photos .rm{
+  position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;
+  background:var(--red);color:var(--paper2);font-size:.68rem;line-height:20px;text-align:center;
+}
+.addph{
+  width:74px;height:74px;border:1px dashed var(--sub);color:var(--sub);
+  display:flex;align-items:center;justify-content:center;font-size:1.25rem;cursor:pointer;background:none;
 }
 
-/* font picker */
-.fontrow{margin-top:22px;display:flex;align-items:center;gap:8px;justify-content:center}
-.fontlabel{font-size:.72rem;color:var(--sub)}
+/* ---- footer utils ---- */
+.fontrow{margin-top:20px;display:flex;align-items:center;gap:7px;justify-content:center}
+.fontlabel{font-size:.64rem;color:var(--sub);letter-spacing:.15em;text-transform:uppercase}
 .fontopt{
-  font-size:.78rem;padding:8px 14px;border-radius:12px;background:var(--card);
-  border:1.5px solid var(--line);font-family:inherit;color:var(--ink);
+  font-size:.74rem;padding:7px 12px;border-radius:15px;background:var(--paper2);
+  border:1px solid var(--line);color:var(--ink);
 }
-.fontopt.sel{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.fontopt[data-font=batang]{font-family:'Gowun Batang',serif}
-.fontopt[data-font=gaegu]{font-family:'Gaegu',sans-serif}
-
-/* footer */
-.foot{margin-top:26px;display:flex;gap:8px;justify-content:center}
+.fontopt.sel{background:var(--red);color:var(--paper2);border-color:var(--red)}
+.fontopt[data-font=type]{font-family:'Special Elite'}
+.fontopt[data-font=serif]{font-family:'Gowun Batang',serif}
+.fontopt[data-font=script]{font-family:'Caveat',cursive;font-size:.9rem}
+.foot{margin-top:14px;display:flex;gap:8px;justify-content:center}
 .foot button,.foot label{
-  font-size:.72rem;color:var(--sub);padding:8px 12px;border-radius:10px;
-  border:1.5px dashed var(--line);cursor:pointer;background:none;font-family:inherit;
+  font-size:.66rem;color:var(--sub);padding:7px 11px;border-radius:8px;
+  border:1px dashed var(--line);cursor:pointer;background:none;font-family:inherit;
+  letter-spacing:.08em;
 }
 
-/* sheet (editor / detail) */
+/* ---- Q&A view ---- */
+.qna-deck{text-align:center;padding:6px 0 4px}
+.qna-count{font-size:.7rem;color:var(--sub);letter-spacing:.1em;margin-bottom:14px}
+.qna-count b{color:var(--red-deep);font-weight:normal}
+.qcard{
+  background:var(--paper2);border:1.5px solid var(--red);border-radius:4px;
+  padding:26px 20px 22px;position:relative;margin-bottom:14px;
+}
+.qcard::before{
+  content:"";position:absolute;inset:5px;border:1px solid var(--line);pointer-events:none;
+}
+.qcard .qno{
+  font-family:var(--display);font-style:italic;color:var(--red);font-size:.8rem;margin-bottom:10px;
+}
+.qcard .qtext{font-size:1rem;line-height:1.8}
+.qcard.placeholder-card .qtext{color:var(--sub);font-size:.85rem}
+.qna-acts{display:flex;gap:8px;justify-content:center;margin-bottom:8px}
+.drawbtn{
+  background:var(--red);color:var(--paper2);border-radius:17px;padding:11px 20px;
+  font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+}
+.answerbtn{
+  background:var(--paper2);color:var(--red);border:1.5px solid var(--red);
+  border-radius:17px;padding:11px 20px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;
+}
+.drawbtn:active,.answerbtn:active{transform:scale(.96)}
+.qna-list{margin-top:24px}
+.qentry{
+  background:var(--paper2);border:1px solid var(--line);border-radius:8px;
+  padding:12px 14px;margin-bottom:9px;cursor:pointer;
+}
+.qentry:active{transform:scale(.98)}
+.qentry .qq{font-size:.68rem;color:var(--red-deep);margin-bottom:4px;line-height:1.5}
+.qentry .qa{font-size:.85rem;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---- bottom nav ---- */
+.tabbar{
+  position:fixed;left:50%;bottom:0;transform:translateX(-50%);
+  width:100%;max-width:460px;z-index:9;
+  background:var(--paper2);border-top:1.5px solid var(--red);
+  display:flex;padding-bottom:env(safe-area-inset-bottom);
+}
+.tab{
+  flex:1;padding:11px 0 9px;display:flex;flex-direction:column;align-items:center;gap:3px;
+  color:var(--sub);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;
+}
+.tab svg{width:20px;height:20px}
+.tab.sel{color:var(--red)}
+
+/* ---- sheets ---- */
 .overlay{
-  position:fixed;inset:0;background:rgba(33,32,31,.35);opacity:0;pointer-events:none;
+  position:fixed;inset:0;background:rgba(74,32,22,.4);opacity:0;pointer-events:none;
   transition:opacity .22s;z-index:10;
 }
 .overlay.on{opacity:1;pointer-events:auto}
 .sheet{
   position:fixed;left:50%;bottom:0;transform:translate(-50%,105%);
   width:100%;max-width:440px;max-height:88vh;overflow-y:auto;
-  background:var(--bg);border-radius:26px 26px 0 0;z-index:11;
+  background:var(--paper);border-radius:14px 14px 0 0;z-index:11;
   padding:14px 20px calc(24px + env(safe-area-inset-bottom));
   transition:transform .28s cubic-bezier(.32,.9,.35,1);
-  border-top:2px solid var(--ink);
+  border-top:2px solid var(--red);
 }
 .sheet.on{transform:translate(-50%,0)}
-.grab{width:42px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 14px}
-.sheet .dt{font-size:1.05rem;margin-bottom:2px}
-.sheet .dt .num{font-size:1.1rem}
-.sheet .sub{font-size:.75rem;color:var(--sub);margin-bottom:16px}
+.grab{width:40px;height:3px;border-radius:2px;background:var(--line);margin:0 auto 14px}
+.sheet .dt{font-family:var(--display);font-style:italic;font-size:1.1rem;color:var(--red-deep);margin-bottom:2px}
+.sheet .sub{font-size:.72rem;color:var(--sub);margin-bottom:14px}
 
-.moodrow{display:flex;justify-content:space-between;gap:6px;margin-bottom:18px}
-.moodopt{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:9px 0;border-radius:16px;border:1.5px solid transparent}
-.moodopt .face{width:40px;height:40px}
-.moodopt span{font-size:.68rem;color:var(--sub)}
-.moodopt.sel{border-color:var(--ink);background:var(--card)}
-.moodopt.sel span{color:var(--ink)}
+.moodrow{display:flex;justify-content:space-between;gap:5px;margin-bottom:16px}
+.moodopt{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 0;border-radius:8px;border:1px solid transparent}
+.moodopt .face{width:36px;height:36px}
+.moodopt span{font-size:.62rem;color:var(--sub);letter-spacing:.04em}
+.moodopt.sel{border-color:var(--red);background:var(--paper2)}
+.moodopt.sel span{color:var(--red-deep)}
 
-.fieldlabel{font-size:.75rem;color:var(--sub);margin:0 0 7px 2px;display:flex;justify-content:space-between}
+.fieldlabel{font-size:.68rem;color:var(--red);letter-spacing:.12em;text-transform:uppercase;margin:0 0 7px 2px;display:flex;justify-content:space-between;align-items:center}
+.fieldlabel .cnt{color:var(--sub);text-transform:none;letter-spacing:0}
 input[type=text],textarea{
-  width:100%;background:var(--card);border:1.5px solid var(--line);border-radius:16px;
-  padding:13px 14px;font-family:inherit;font-size:.95rem;color:var(--ink);outline:none;
+  width:100%;background:var(--paper2);border:1px solid var(--line);border-radius:8px;
+  padding:12px 13px;font-family:inherit;font-size:.92rem;color:var(--ink);outline:none;
 }
-input[type=text]:focus,textarea:focus{border-color:var(--ink)}
-textarea{min-height:120px;resize:vertical;line-height:1.7}
-.gap{height:16px}
+input[type=text]:focus,textarea:focus{border-color:var(--red)}
+textarea{
+  min-height:150px;resize:vertical;line-height:30px;padding-top:8px;
+  background-image:repeating-linear-gradient(transparent,transparent 29px,var(--line) 29px,var(--line) 30px);
+  background-attachment:local;
+}
+.gap{height:14px}
+.quotebtn{font-size:.68rem;color:var(--red);border:1px solid var(--line);background:var(--paper2);padding:4px 10px;border-radius:8px;font-family:inherit;text-transform:none;letter-spacing:0}
+.quotebtn:active{transform:scale(.95)}
+.quotebox{background:var(--paper2);border:1px solid var(--red);border-radius:8px;padding:13px 15px;margin-bottom:10px}
+.quotebox p{font-size:.85rem;line-height:1.8;margin-bottom:10px;font-style:italic}
+.quoteacts{display:flex;gap:6px}
+.quoteacts button{font-size:.68rem;padding:7px 11px;border-radius:8px;font-family:inherit;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.quoteacts button:first-child{background:var(--red);color:var(--paper2);border-color:var(--red)}
 
-.photos{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-.photos .ph{position:relative}
-.photos img{width:76px;height:76px;object-fit:cover;border-radius:14px;border:1.5px solid var(--line)}
-.photos .rm{
-  position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;
-  background:var(--ink);color:var(--bg);font-size:.7rem;line-height:20px;text-align:center;
+.sheetbtns{display:flex;gap:9px;margin-top:20px}
+.savebtn{
+  flex:1;background:var(--red);color:var(--paper2);border-radius:8px;padding:14px 0;
+  font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;font-family:inherit;
 }
-.addph{
-  width:76px;height:76px;border-radius:14px;border:1.5px dashed var(--sub);
-  display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--sub);cursor:pointer;
-}
-.sheetbtns{display:flex;gap:10px;margin-top:22px}
-.savebtn{flex:1;background:var(--ink);color:var(--bg);border-radius:16px;padding:15px 0;font-size:.95rem;font-family:inherit}
-.delbtn{width:54px;border-radius:16px;border:1.5px solid var(--line);background:var(--card);font-size:1rem}
+.delbtn{width:52px;border-radius:8px;border:1px solid var(--line);background:var(--paper2);font-size:.95rem}
 .savebtn:active,.delbtn:active{transform:scale(.97)}
 
-/* quote box */
-.quotebtn{font-size:.72rem;color:var(--ink);border:1.5px solid var(--line);background:var(--card);padding:4px 10px;border-radius:10px;font-family:inherit}
-.quotebtn:active{transform:scale(.95)}
-.quotebox{
-  background:var(--card);border:1.5px solid var(--ink);border-radius:16px;
-  padding:14px 16px;margin-bottom:10px;
-}
-.quotebox p{font-size:.88rem;line-height:1.8;margin-bottom:10px}
-.quoteacts{display:flex;gap:6px}
-.quoteacts button{
-  font-size:.72rem;padding:7px 11px;border-radius:10px;font-family:inherit;
-  border:1.5px solid var(--line);background:var(--bg);color:var(--ink);
-}
-.quoteacts button:first-child{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* detail */
+.detail .oneline-big{font-size:.9rem;line-height:1.7;margin:10px 0 2px}
+.detail .body{font-size:.88rem;line-height:2;color:var(--ink);white-space:pre-wrap;margin-top:10px}
+.detail .photos img{width:100%;height:auto;max-height:340px}
+.detail .face{width:46px;height:46px}
+.detail .headrow{display:flex;align-items:center;gap:13px}
 
-/* lightbox */
+/* lightbox / toast */
 .lightbox{
-  position:fixed;inset:0;background:rgba(33,32,31,.92);z-index:30;
+  position:fixed;inset:0;background:rgba(46,17,11,.93);z-index:30;
   display:flex;align-items:center;justify-content:center;padding:20px;
   opacity:0;pointer-events:none;transition:opacity .2s;
 }
 .lightbox.on{opacity:1;pointer-events:auto}
-.lightbox img{max-width:100%;max-height:92vh;border-radius:14px}
-.lightbox .close{
-  position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;
-  background:var(--bg);color:var(--ink);font-size:1.1rem;
-}
-
-/* detail view */
-.detail .oneline-big{font-size:1.05rem;line-height:1.6;margin:12px 0 4px}
-.detail .body{font-size:.92rem;line-height:1.9;color:#4A4842;white-space:pre-wrap;margin-top:12px}
-.detail .photos img{width:100%;height:auto;max-height:340px;border-radius:18px}
-.detail .face{width:52px;height:52px}
-.detail .headrow{display:flex;align-items:center;gap:14px}
+.lightbox img{max-width:100%;max-height:92vh;background:var(--paper2);padding:6px}
+.lightbox .close{position:absolute;top:18px;right:18px;width:38px;height:38px;border-radius:50%;background:var(--paper2);color:var(--red);font-size:1rem}
 .toast{
-  position:fixed;left:50%;bottom:26px;transform:translate(-50%,80px);
-  background:var(--ink);color:var(--bg);font-size:.8rem;padding:11px 18px;border-radius:14px;
-  transition:transform .25s;z-index:20;pointer-events:none;
+  position:fixed;left:50%;bottom:76px;transform:translate(-50%,90px);
+  background:var(--red-deep);color:var(--paper2);font-size:.76rem;padding:10px 17px;border-radius:8px;
+  transition:transform .25s;z-index:20;pointer-events:none;letter-spacing:.04em;
 }
 .toast.on{transform:translate(-50%,0)}
+.hidden{display:none!important}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <div class="app">
+  <svg class="corner tl" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 42 C4 20 8 10 20 7 C30 4.5 40 6 42 4 M8 40 C8 24 12 14 22 11 C29 9 36 9.5 39 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="6" cy="6" r="3" fill="currentColor"/></svg>
+  <svg class="corner tr" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 42 C4 20 8 10 20 7 C30 4.5 40 6 42 4 M8 40 C8 24 12 14 22 11 C29 9 36 9.5 39 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="6" cy="6" r="3" fill="currentColor"/></svg>
+  <svg class="corner bl" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 42 C4 20 8 10 20 7 C30 4.5 40 6 42 4 M8 40 C8 24 12 14 22 11 C29 9 36 9.5 39 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="6" cy="6" r="3" fill="currentColor"/></svg>
+  <svg class="corner br" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 42 C4 20 8 10 20 7 C30 4.5 40 6 42 4 M8 40 C8 24 12 14 22 11 C29 9 36 9.5 39 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="6" cy="6" r="3" fill="currentColor"/></svg>
+
   <header>
-    <img src="icon-192.png" alt="365 로고">
-    <h1>365 일기장</h1>
-    <span class="hint">쓰고 싶은 날만, 가볍게</span>
+    <div class="kicker">A Little Space of One's Own</div>
+    <h1>Only Girls Diary</h1>
+    <svg class="flourish" viewBox="0 0 170 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 11 H60 M110 11 H165" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M63 11 C68 4 74 4 78 9 C81 13 86 13 88 9 M107 11 C102 18 96 18 92 13 C89 9 84 9 82 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+      <circle cx="85" cy="11" r="2.2" fill="currentColor"/>
+    </svg>
   </header>
 
-  <div class="monthbar">
-    <div class="label" id="monthLabel"></div>
-    <div class="navbtns">
-      <button class="iconbtn" id="prevBtn" aria-label="이전 달">←</button>
-      <button class="todaybtn" id="todayBtn">오늘</button>
-      <button class="iconbtn" id="nextBtn" aria-label="다음 달">→</button>
+  <!-- ================= DIARY VIEW ================= -->
+  <div id="diaryView">
+    <div class="monthbar">
+      <div class="label" id="monthLabel"></div>
+      <div class="navbtns">
+        <button class="iconbtn" id="prevBtn" aria-label="Previous month">←</button>
+        <button class="todaybtn" id="todayBtn">Today</button>
+        <button class="iconbtn" id="nextBtn" aria-label="Next month">→</button>
+      </div>
+    </div>
+    <div class="weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+    <div class="grid" id="grid"></div>
+    <div class="strip" id="strip"></div>
+    <div class="recent">
+      <h2>This Month's Letters</h2>
+      <div id="recentList"></div>
+    </div>
+    <div class="fontrow">
+      <span class="fontlabel">Type</span>
+      <button class="fontopt" data-font="type">Typewriter</button>
+      <button class="fontopt" data-font="serif">Serif</button>
+      <button class="fontopt" data-font="script">Script</button>
+    </div>
+    <div class="foot">
+      <button id="exportBtn">Export backup</button>
+      <label for="importFile">Import backup</label>
+      <input type="file" id="importFile" accept="application/json" hidden>
     </div>
   </div>
 
-  <div class="weekdays"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
-  <div class="grid" id="grid"></div>
-
-  <div class="strip" id="strip"></div>
-
-  <div class="recent">
-    <h2>이번 달의 기록</h2>
-    <div id="recentList"></div>
-  </div>
-
-  <div class="fontrow">
-    <span class="fontlabel">글씨체</span>
-    <button class="fontopt" data-font="plex">깔끔</button>
-    <button class="fontopt" data-font="batang">명조</button>
-    <button class="fontopt" data-font="gaegu">손글씨</button>
-  </div>
-
-  <div class="foot">
-    <button id="exportBtn">백업 내보내기</button>
-    <label for="importFile">백업 가져오기</label>
-    <input type="file" id="importFile" accept="application/json" hidden>
+  <!-- ================= Q&A VIEW ================= -->
+  <div id="qnaView" class="hidden">
+    <div class="qna-deck">
+      <div class="qna-count" id="qnaCount"></div>
+      <div class="qcard placeholder-card" id="qCard">
+        <div class="qno" id="qNo">100 Questions</div>
+        <div class="qtext" id="qText">Draw a card and see which question finds you today. Keep drawing until one feels right.</div>
+      </div>
+      <div class="qna-acts">
+        <button class="drawbtn" id="drawBtn">Draw a question</button>
+        <button class="answerbtn hidden" id="answerBtn">Answer this</button>
+      </div>
+    </div>
+    <div class="qna-list">
+      <h2>My Answers</h2>
+      <div id="qnaList"></div>
+    </div>
   </div>
 </div>
+
+<!-- bottom nav -->
+<nav class="tabbar">
+  <button class="tab sel" id="tabDiary">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Diary
+  </button>
+  <button class="tab" id="tabQna">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><path d="M16 8L2 22"/><path d="M17.5 15H9"/></svg>
+    100 Q&amp;A
+  </button>
+</nav>
 
 <!-- editor sheet -->
 <div class="overlay" id="overlay"></div>
 <div class="sheet" id="editorSheet">
   <div class="grab"></div>
   <div class="dt" id="edDate"></div>
-  <div class="sub">오늘의 기분을 하나 골라줘</div>
+  <div class="sub">How was this day?</div>
   <div class="moodrow" id="moodRow"></div>
-  <div class="fieldlabel"><span>오늘 하루 한 줄 요약</span><span id="olCount">0/40</span></div>
-  <input type="text" id="edOneline" maxlength="40" placeholder="예: 드디어 이삿짐 다 쌌다!">
+  <div class="fieldlabel"><span>One-line summary</span><span class="cnt" id="olCount">0/40</span></div>
+  <input type="text" id="edOneline" maxlength="40" placeholder="e.g. A quiet, good day.">
   <div class="gap"></div>
-  <div class="fieldlabel"><span>더 쓰고 싶은 이야기 (선택)</span><button type="button" class="quotebtn" id="quoteBtn">✦ 글귀 뽑기</button></div>
+  <div class="fieldlabel"><span>More to say <em style="text-transform:none">(optional)</em></span><button type="button" class="quotebtn" id="quoteBtn">✦ Draw a quote</button></div>
   <div class="quotebox" id="quoteBox" hidden>
     <p id="quoteText"></p>
     <div class="quoteacts">
-      <button type="button" id="quoteAgain">다시 뽑기</button>
-      <button type="button" id="quoteUse">본문에 넣기</button>
-      <button type="button" id="quoteClose">닫기</button>
+      <button type="button" id="quoteAgain">Draw again</button>
+      <button type="button" id="quoteUse">Add to entry</button>
+      <button type="button" id="quoteClose">Close</button>
     </div>
   </div>
-  <textarea id="edBody" placeholder="쓰고 싶은 만큼만. 쓸 말이 없으면 위에서 글귀를 뽑아봐."></textarea>
-  <div class="fieldlabel" style="margin-top:16px"><span>사진 (최대 4장)</span></div>
+  <textarea id="edBody" placeholder="As much or as little as you like. Out of words? Draw a quote above."></textarea>
+  <div class="fieldlabel" style="margin-top:14px"><span>Photos <em style="text-transform:none">(up to 4)</em></span></div>
   <div class="photos" id="edPhotos"></div>
   <input type="file" id="photoInput" accept="image/*" multiple hidden>
   <div class="sheetbtns">
-    <button class="delbtn" id="delBtn" title="이 날 기록 삭제">🗑</button>
-    <button class="savebtn" id="saveBtn">저장하기</button>
+    <button class="delbtn" id="delBtn" title="Delete this entry">🗑</button>
+    <button class="savebtn" id="saveBtn">Save</button>
   </div>
 </div>
 
@@ -305,116 +408,122 @@ textarea{min-height:120px;resize:vertical;line-height:1.7}
   <div class="photos" id="dtPhotos"></div>
   <div class="body" id="dtBody"></div>
   <div class="sheetbtns">
-    <button class="savebtn" id="editBtn">수정하기</button>
+    <button class="savebtn" id="editBtn">Edit</button>
+  </div>
+</div>
+
+<!-- qna editor sheet -->
+<div class="sheet" id="qnaSheet">
+  <div class="grab"></div>
+  <div class="dt" id="qEdNo"></div>
+  <div class="sub" id="qEdText" style="font-size:.85rem;line-height:1.7;color:var(--ink)"></div>
+  <div class="fieldlabel"><span>My answer</span></div>
+  <textarea id="qEdBody" placeholder="Take your time. There's no wrong answer."></textarea>
+  <div class="sheetbtns">
+    <button class="delbtn" id="qDelBtn" title="Delete this answer">🗑</button>
+    <button class="savebtn" id="qSaveBtn">Save</button>
   </div>
 </div>
 
 <div class="lightbox" id="lightbox">
-  <button class="close" aria-label="닫기">✕</button>
-  <img id="lightboxImg" src="" alt="사진 크게 보기">
+  <button class="close" aria-label="Close">✕</button>
+  <img id="lightboxImg" src="" alt="Photo">
 </div>
 
 <div class="toast" id="toast"></div>
-
 <script>
-/* ---------- mood faces (squircle SVG, 로고의 둥근 볼드 형태를 따름) ---------- */
+/* ---------- mood faces ---------- */
 const MOODS = [
-  {id:'best', name:'최고', color:'var(--m1)', hex:'#E8B94F', mouth:'M14 24 Q20 30 26 24', eyes:'arc'},
-  {id:'good', name:'좋아', color:'var(--m2)', hex:'#9CAF88', mouth:'M15 24 Q20 28 25 24', eyes:'dot'},
-  {id:'meh',  name:'무난', color:'var(--m3)', hex:'#C9C2B2', mouth:'M15 25 H25',           eyes:'dot'},
-  {id:'bad',  name:'별로', color:'var(--m4)', hex:'#9AA9BC', mouth:'M15 27 Q20 23 25 27',  eyes:'dot'},
-  {id:'hard', name:'힘듦', color:'var(--m5)', hex:'#C58063', mouth:'M15 27 Q20 23 25 27',  eyes:'x'}
+  {id:'best', name:'Great', hex:'#C08A3E', mouth:'M14 24 Q20 30 26 24', eyes:'arc'},
+  {id:'good', name:'Good',  hex:'#8E9455', mouth:'M15 24 Q20 28 25 24', eyes:'dot'},
+  {id:'meh',  name:'Okay',  hex:'#C3AC86', mouth:'M15 25 H25',          eyes:'dot'},
+  {id:'bad',  name:'Meh',   hex:'#7E93A8', mouth:'M15 27 Q20 23 25 27', eyes:'dot'},
+  {id:'hard', name:'Rough', hex:'#B14A3C', mouth:'M15 27 Q20 23 25 27', eyes:'x'}
 ];
+const INK='#5C2117';
 function faceSVG(moodId){
   const m = MOODS.find(x=>x.id===moodId); if(!m) return '';
   let eyes='';
-  if(m.eyes==='dot') eyes='<circle cx="14" cy="17" r="2.2" fill="#21201F"/><circle cx="26" cy="17" r="2.2" fill="#21201F"/>';
-  if(m.eyes==='arc') eyes='<path d="M11 17 Q14 14 17 17" stroke="#21201F" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M23 17 Q26 14 29 17" stroke="#21201F" stroke-width="2.6" fill="none" stroke-linecap="round"/>';
-  if(m.eyes==='x') eyes='<path d="M12 15 L16 19 M16 15 L12 19" stroke="#21201F" stroke-width="2.4" stroke-linecap="round"/><path d="M24 15 L28 19 M28 15 L24 19" stroke="#21201F" stroke-width="2.4" stroke-linecap="round"/>';
+  if(m.eyes==='dot') eyes=`<circle cx="14" cy="17" r="2.2" fill="${INK}"/><circle cx="26" cy="17" r="2.2" fill="${INK}"/>`;
+  if(m.eyes==='arc') eyes=`<path d="M11 17 Q14 14 17 17" stroke="${INK}" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M23 17 Q26 14 29 17" stroke="${INK}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
+  if(m.eyes==='x') eyes=`<path d="M12 15 L16 19 M16 15 L12 19" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/><path d="M24 15 L28 19 M28 15 L24 19" stroke="${INK}" stroke-width="2.4" stroke-linecap="round"/>`;
   return `<svg class="face" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-label="${m.name}">
-    <rect x="1.5" y="1.5" width="37" height="37" rx="13" fill="${m.hex}" stroke="#21201F" stroke-width="2.4"/>
-    ${eyes}<path d="${m.mouth}" stroke="#21201F" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <rect x="1.5" y="1.5" width="37" height="37" rx="12" fill="${m.hex}" stroke="${INK}" stroke-width="2.4"/>
+    ${eyes}<path d="${m.mouth}" stroke="${INK}" stroke-width="2.6" fill="none" stroke-linecap="round"/>
   </svg>`;
 }
 
-/* ---------- storage (GitHub Pages에서는 localStorage로 영구 저장) ---------- */
-const KEY='diary365.entries';
-let memStore={};
-const store={
-  load(){ try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch(e){ return memStore; } },
-  save(data){
-    try{ localStorage.setItem(KEY, JSON.stringify(data)); return true; }
-    catch(e){
-      memStore=data;
-      if(e && (e.name==='QuotaExceededError'||e.code===22)){ toast('저장 공간이 가득 찼어. 사진 수를 줄이거나 백업 후 정리해줘.'); }
-      return false;
-    }
+/* ---------- storage ---------- */
+const KEY='diary365.entries', QKEY='diary365.qna', FONT_KEY='diary365.font';
+let memE={}, memQ={};
+function load(k, mem){ try{ return JSON.parse(localStorage.getItem(k)||'{}'); }catch(e){ return mem; } }
+function save(k, data, mem){
+  try{ localStorage.setItem(k, JSON.stringify(data)); return true; }
+  catch(e){
+    if(k===KEY) memE=data; else memQ=data;
+    if(e && (e.name==='QuotaExceededError'||e.code===22)) toast('Storage is full. Try fewer photos or export a backup.');
+    return false;
   }
-};
-let entries = store.load();
+}
+let entries = load(KEY, memE);
+let qna = load(QKEY, memQ);
 
-/* ---------- state ---------- */
+/* ---------- state / utils ---------- */
 const today = new Date();
 let viewY = today.getFullYear(), viewM = today.getMonth();
-let editKey = null;
-let editPhotos = [];
-
+let editKey=null, editPhotos=[], selMood='good';
 const $ = id => document.getElementById(id);
 const pad = n => String(n).padStart(2,'0');
 const keyOf = (y,m,d)=>`${y}-${pad(m+1)}-${pad(d)}`;
-const DOW = ['일','월','화','수','목','금','토'];
-
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DOWS=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function ord(d){ const s=['th','st','nd','rd'],v=d%100; return d+(s[(v-20)%10]||s[v]||s[0]); }
 function fmtDate(k){
   const [y,m,d]=k.split('-').map(Number);
-  const dw = DOW[new Date(y,m-1,d).getDay()];
-  return `<span class="num">${m}</span>월 <span class="num">${d}</span>일 ${dw}요일`;
+  return `${DOWS[new Date(y,m-1,d).getDay()]}, ${MONTHS[m-1]} ${ord(d)}`;
 }
+function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-/* ---------- calendar render ---------- */
+/* ---------- diary render ---------- */
 function render(){
-  $('monthLabel').innerHTML = `<span class="num">${viewY}</span>년 <span class="num">${viewM+1}</span>월`;
+  $('monthLabel').textContent = `${MONTHS[viewM]} ${viewY}`;
   const grid=$('grid'); grid.innerHTML='';
   const first = new Date(viewY,viewM,1).getDay();
   const days = new Date(viewY,viewM+1,0).getDate();
   for(let i=0;i<first;i++){ const c=document.createElement('div'); c.className='cell empty'; grid.appendChild(c); }
   for(let d=1;d<=days;d++){
-    const k=keyOf(viewY,viewM,d);
-    const e=entries[k];
+    const k=keyOf(viewY,viewM,d), e=entries[k];
     const c=document.createElement('div');
     c.className='cell';
     if(viewY===today.getFullYear()&&viewM===today.getMonth()&&d===today.getDate()) c.classList.add('today');
-    c.innerHTML = `<span class="d num">${d}</span>` +
+    c.innerHTML = `<span class="d">${d}</span>` +
       (e ? faceSVG(e.mood) : '<span class="placeholder"></span>') +
       (e && e.photos && e.photos.length ? '<span class="camdot"></span>' : '');
     c.addEventListener('click',()=> e ? openDetail(k) : openEditor(k));
     grid.appendChild(c);
   }
-  // strip
   const monthKeys = Object.keys(entries).filter(k=>k.startsWith(`${viewY}-${pad(viewM+1)}`));
   $('strip').innerHTML = monthKeys.length
-    ? `이번 달, <b><span class="num">${monthKeys.length}</span>일</b>의 기록이 쌓였어. 딱 쓰고 싶었던 만큼.`
-    : `아직 이 달의 기록은 없어. 물론 그래도 괜찮아 — 쓰고 싶은 날 아무 칸이나 눌러줘.`;
-  // recent list
+    ? `<b>${monthKeys.length}</b> ${monthKeys.length===1?'day':'days'} written this month — exactly as many as you wanted.`
+    : `Nothing here yet, and that's perfectly fine.<br>Tap any day whenever you feel like writing.`;
   const list=$('recentList'); list.innerHTML='';
   const sorted = monthKeys.sort().reverse();
   if(!sorted.length){
-    list.innerHTML='<div class="emptymsg">날짜를 누르면 그날의 일기를 쓸 수 있어.<br>매일 쓰지 않아도 되는 일기장이야.</div>';
+    list.innerHTML='<div class="emptymsg">Tap a date to write that day\'s letter.<br>This diary never asks for every day.</div>';
   }
   sorted.forEach(k=>{
     const e=entries[k];
     const card=document.createElement('div');
     card.className='entrycard';
     card.innerHTML = faceSVG(e.mood) +
-      `<div class="txt"><div class="date">${fmtDate(k)}</div><div class="oneline">${esc(e.oneline)||'<span style="color:var(--sub)">한 줄 요약 없음</span>'}</div></div>` +
-      (e.photos&&e.photos[0]?`<img class="thumb" src="${e.photos[0]}" alt="">`:'');
+      `<div class="txt"><div class="date">${fmtDate(k)}</div><div class="oneline">${esc(e.oneline)||'<span style="color:var(--sub)">No summary</span>'}</div></div>` +
+      (e.photos&&e.photos[0]?`<img class="stampthumb" src="${e.photos[0]}" alt="">`:'');
     card.addEventListener('click',()=>openDetail(k));
     list.appendChild(card);
   });
 }
-function esc(s){ return (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
-/* ---------- editor ---------- */
-let selMood='good';
+/* ---------- diary editor ---------- */
 function buildMoodRow(){
   const row=$('moodRow'); row.innerHTML='';
   MOODS.forEach(m=>{
@@ -429,12 +538,13 @@ function openEditor(k){
   editKey=k;
   const e=entries[k];
   selMood = e ? e.mood : 'good';
-  $('edDate').innerHTML = fmtDate(k);
+  $('edDate').textContent = fmtDate(k);
   $('edOneline').value = e ? e.oneline : '';
   $('edBody').value = e ? (e.body||'') : '';
   editPhotos = e && e.photos ? [...e.photos] : [];
   $('olCount').textContent = `${$('edOneline').value.length}/40`;
   $('delBtn').style.display = e ? 'block' : 'none';
+  $('quoteBox').hidden = true;
   buildMoodRow(); renderEditPhotos();
   closeSheets(); show($('editorSheet'));
 }
@@ -442,7 +552,7 @@ function renderEditPhotos(){
   const wrap=$('edPhotos'); wrap.innerHTML='';
   editPhotos.forEach((src,i)=>{
     const d=document.createElement('div'); d.className='ph';
-    d.innerHTML=`<img src="${src}" alt="사진 ${i+1}"><button type="button" class="rm" aria-label="사진 삭제">✕</button>`;
+    d.innerHTML=`<img src="${src}" alt="Photo ${i+1}"><button type="button" class="rm" aria-label="Remove photo">✕</button>`;
     d.querySelector('.rm').addEventListener('click',()=>{ editPhotos.splice(i,1); renderEditPhotos(); });
     wrap.appendChild(d);
   });
@@ -472,56 +582,302 @@ function compress(file){
   });
 }
 $('edOneline').addEventListener('input',e=>$('olCount').textContent=`${e.target.value.length}/40`);
-
 $('saveBtn').addEventListener('click',()=>{
   const oneline=$('edOneline').value.trim();
   const body=$('edBody').value.trim();
-  if(!oneline && !body && !editPhotos.length){ toast('한 줄이라도, 사진 한 장이라도 남겨보자!'); return; }
+  if(!oneline && !body && !editPhotos.length){ toast('Even one line, or one photo, will do!'); return; }
   entries[editKey]={ mood:selMood, oneline, body, photos:editPhotos, updated:Date.now() };
-  store.save(entries);
-  closeSheets(); render(); toast('저장했어 ✓');
+  save(KEY, entries, memE);
+  closeSheets(); render(); toast('Saved ✓');
 });
 $('delBtn').addEventListener('click',()=>{
-  if(!confirm('이 날의 기록을 지울까?')) return;
-  delete entries[editKey]; store.save(entries);
-  closeSheets(); render(); toast('지웠어');
+  if(!confirm('Delete this day\'s entry?')) return;
+  delete entries[editKey]; save(KEY, entries, memE);
+  closeSheets(); render(); toast('Deleted');
 });
 
-/* ---------- detail ---------- */
+/* ---------- diary detail ---------- */
 let detailKey=null;
 function openDetail(k){
   detailKey=k;
   const e=entries[k]; if(!e) return;
   $('dtFace').innerHTML=faceSVG(e.mood);
-  $('dtDate').innerHTML=fmtDate(k);
+  $('dtDate').textContent=fmtDate(k);
   $('dtMoodName').textContent=MOODS.find(m=>m.id===e.mood).name;
   $('dtOneline').textContent=e.oneline||'';
   $('dtBody').textContent=e.body||'';
   const p=$('dtPhotos'); p.innerHTML='';
-  (e.photos||[]).forEach(src=>{ const i=document.createElement('img'); i.src=src; i.alt='일기 사진'; p.appendChild(i); });
+  (e.photos||[]).forEach(src=>{ const i=document.createElement('img'); i.src=src; i.alt='Diary photo'; p.appendChild(i); });
   closeSheets(); show($('detailSheet'));
 }
 $('editBtn').addEventListener('click',()=>openEditor(detailKey));
 
+/* ---------- quotes ---------- */
+const QUOTES = [
+  "Slow is fine, as long as you don't stop. — Confucius",
+  "The darkest night ends, and the sun rises. — Victor Hugo",
+  "While there's life, there's hope. — Cicero",
+  "Happiness is a habit — cultivate it. — Elbert Hubbard",
+  "Comparison is the thief of joy. — Theodore Roosevelt",
+  "Be the change you wish to see in the world. — Gandhi",
+  "Action is the foundational key to all success. — Picasso",
+  "Don't wait for the perfect moment; it never comes. — Napoleon Hill",
+  "Resting is part of the journey, too.",
+  "Better than yesterday's me is more than enough.",
+  "You need darkness to see the stars.",
+  "Failures are finger posts on the road to achievement. — C.S. Lewis",
+  "Whether you think you can or you can't, you're right. — Henry Ford",
+  "Written words outlast memory.",
+  "The most personal is the most creative. — Martin Scorsese",
+  "Fear not slowness, fear standing still. — Chinese proverb",
+  "It is never too late to be what you might have been. — George Eliot",
+  "Today is a gift — that's why it's called the present.",
+  "A smooth sea never made a skilled sailor. — African proverb",
+  "A day written down is a day lived twice.",
+  "To love oneself is the beginning of a lifelong romance. — Oscar Wilde",
+  "Great things are done by a series of small things. — Van Gogh",
+  "After all, tomorrow is another day. — Gone with the Wind",
+  "Don't postpone joy. It lives here, now.",
+  "Your days, one by one, become your life.",
+  "Deep waters make no sound.",
+  "Waste no fresh tears over old griefs. — Euripides",
+  "One small step forward still counts as a good day.",
+  "Consistency beats talent.",
+  "A day with nothing to write is still a day fully lived."
+];
+let lastQuote=-1;
+function pickQuote(){
+  let i;
+  do { i=Math.floor(Math.random()*QUOTES.length); } while(i===lastQuote && QUOTES.length>1);
+  lastQuote=i;
+  $('quoteText').textContent = QUOTES[i];
+}
+$('quoteBtn').addEventListener('click',()=>{ pickQuote(); $('quoteBox').hidden=false; });
+$('quoteAgain').addEventListener('click',pickQuote);
+$('quoteClose').addEventListener('click',()=>$('quoteBox').hidden=true);
+$('quoteUse').addEventListener('click',()=>{
+  const q=$('quoteText').textContent, b=$('edBody');
+  b.value = b.value ? b.value.replace(/\s*$/,'') + '\n\n' + q : q;
+  toast('Added to your entry ✓');
+});
+
+/* ---------- 100 questions ---------- */
+const QUESTIONS = [
+"What always makes you laugh, no matter what?",
+"What did you want to be when you were seven?",
+"Which smell instantly takes you back in time?",
+"What's a small thing you're unreasonably proud of?",
+"Who knows you best, and what would they say about you?",
+"What's your favorite time of day, and why?",
+"What song would play in the opening scene of your life's movie?",
+"What's the best compliment you've ever received?",
+"What do you do when no one is watching?",
+"Which meal could you eat every week forever?",
+"What's a fear you've outgrown?",
+"What's a fear you haven't — yet?",
+"If you could relive one ordinary day, which would it be?",
+"What's the kindest thing a stranger has done for you?",
+"What are you better at than you give yourself credit for?",
+"What would your perfect Sunday look like, hour by hour?",
+"Which book or story changed how you see the world?",
+"What's something you believed as a child that makes you smile now?",
+"When do you feel most like yourself?",
+"What's the best purchase under $20 you've ever made?",
+"Who do you miss right now?",
+"What's a habit you're glad you built?",
+"What's a habit you'd like to quietly retire?",
+"If you had a free year and no obligations, what would you do?",
+"What's your love language — giving and receiving?",
+"What's the most beautiful place you've ever stood in?",
+"What do you hope people feel after spending time with you?",
+"What's one rule you live by?",
+"What's one rule you love to break?",
+"What was your favorite game as a child?",
+"What does 'home' mean to you?",
+"Which season fits your personality, and why?",
+"What's something you've changed your mind about?",
+"What are you curious about lately?",
+"What's your comfort movie or show?",
+"If your friends described you in three words, what would they be?",
+"What's the best advice you've ever ignored?",
+"What's the best advice you've ever taken?",
+"What tiny luxury makes an ordinary day feel special?",
+"What's a talent you wish you had?",
+"What's a talent you secretly do have?",
+"When was the last time you surprised yourself?",
+"What are you saving for — money, energy, or courage?",
+"If you wrote a letter to yourself five years ago, what's the first line?",
+"If you wrote a letter to yourself five years from now, what's the first line?",
+"What makes you feel instantly calm?",
+"What's your favorite word, in any language?",
+"What tradition — family or personal — do you treasure?",
+"What's the hardest thing you've ever done, and what did it teach you?",
+"What are you grateful for that you rarely say out loud?",
+"What's your idea of a perfect breakfast?",
+"Who was your first friend, and where are they now?",
+"What's a memory that still makes you laugh out loud?",
+"What would you tell your teenage self?",
+"What's something you're looking forward to?",
+"If you could master any skill overnight, what would it be?",
+"What's your relationship with rain?",
+"What do you collect — objects, moments, or people?",
+"What's the last thing that made you cry, happy or sad?",
+"What part of your daily routine do you actually enjoy?",
+"If you opened a tiny shop, what would it sell?",
+"What's a place you've never been but feel drawn to?",
+"What's your favorite photograph you've ever taken?",
+"What does your name mean to you?",
+"What's the most spontaneous thing you've ever done?",
+"When do you feel bravest?",
+"What's a compliment you'd like to hear more often?",
+"What's something worth waiting for?",
+"What piece of clothing feels most like you?",
+"What's your favorite sound in the world?",
+"If today had a title like a book chapter, what would it be?",
+"What's the first thing you notice about people?",
+"What do you wish you'd started earlier?",
+"What's something you quit, and don't regret quitting?",
+"What flavor is your personality?",
+"Who inspires you that you've never told?",
+"What's your favorite way to waste time?",
+"What would you do with one extra hour every day?",
+"What's a promise you've kept to yourself?",
+"What's the best gift you've ever given?",
+"What's the best gift you've ever received?",
+"Where do your best ideas find you?",
+"What's a lesson you keep having to relearn?",
+"If you could ask your future self one question, what would it be?",
+"What are three things on your bucket list right now?",
+"What's your favorite family recipe or dish?",
+"What makes a house feel like a home to you?",
+"What's the most useful thing you own?",
+"What's the most useless thing you own but love anyway?",
+"When did you last do something for the very first time?",
+"What's your favorite memory of this year so far?",
+"What friendship are you most thankful for?",
+"How do you want to be remembered?",
+"What's one thing you'd never lend to anyone?",
+"What does your ideal evening alone look like?",
+"What's a stereotype about you that's completely wrong?",
+"What's one small way the world got better this year?",
+"What are you holding onto that you could let go of?",
+"What made you smile today?",
+"If your life so far were a diary, what would this chapter be called?"
+];
+let currentQ = null;
+function unansweredIdx(){
+  return QUESTIONS.map((_,i)=>i).filter(i=>!qna[i]);
+}
+function drawQuestion(){
+  const pool = unansweredIdx();
+  const from = pool.length ? pool : QUESTIONS.map((_,i)=>i);
+  let i;
+  do { i = from[Math.floor(Math.random()*from.length)]; } while(i===currentQ && from.length>1);
+  currentQ = i;
+  const card=$('qCard');
+  card.classList.remove('placeholder-card');
+  $('qNo').textContent = `Question No. ${i+1}`;
+  $('qText').textContent = QUESTIONS[i];
+  $('answerBtn').classList.remove('hidden');
+  $('drawBtn').textContent = 'Draw again';
+}
+function renderQna(){
+  const answered = Object.keys(qna).length;
+  $('qnaCount').innerHTML = `<b>${answered}</b> of ${QUESTIONS.length} answered`;
+  const list=$('qnaList'); list.innerHTML='';
+  const keys = Object.keys(qna).sort((a,b)=>qna[b].updated-qna[a].updated);
+  if(!keys.length){
+    list.innerHTML='<div class="emptymsg">No answers yet.<br>Draw a question above and answer it whenever you have a quiet moment.</div>';
+    return;
+  }
+  keys.forEach(i=>{
+    const d=document.createElement('div'); d.className='qentry';
+    d.innerHTML=`<div class="qq">No. ${Number(i)+1} — ${esc(QUESTIONS[i])}</div><div class="qa">${esc(qna[i].text)}</div>`;
+    d.addEventListener('click',()=>openQnaEditor(Number(i)));
+    list.appendChild(d);
+  });
+}
+let qEditIdx=null;
+function openQnaEditor(i){
+  qEditIdx=i;
+  $('qEdNo').textContent=`Question No. ${i+1}`;
+  $('qEdText').textContent=QUESTIONS[i];
+  $('qEdBody').value = qna[i] ? qna[i].text : '';
+  $('qDelBtn').style.display = qna[i] ? 'block' : 'none';
+  closeSheets(); show($('qnaSheet'));
+}
+$('drawBtn').addEventListener('click',drawQuestion);
+$('answerBtn').addEventListener('click',()=>{ if(currentQ!==null) openQnaEditor(currentQ); });
+$('qSaveBtn').addEventListener('click',()=>{
+  const t=$('qEdBody').value.trim();
+  if(!t){ toast('Write a little something first!'); return; }
+  qna[qEditIdx]={ text:t, updated:Date.now() };
+  save(QKEY, qna, memQ);
+  closeSheets(); renderQna(); toast('Saved ✓');
+});
+$('qDelBtn').addEventListener('click',()=>{
+  if(!confirm('Delete this answer?')) return;
+  delete qna[qEditIdx]; save(QKEY, qna, memQ);
+  closeSheets(); renderQna(); toast('Deleted');
+});
+
+/* ---------- tabs ---------- */
+function switchTab(t){
+  $('diaryView').classList.toggle('hidden', t!=='diary');
+  $('qnaView').classList.toggle('hidden', t!=='qna');
+  $('tabDiary').classList.toggle('sel', t==='diary');
+  $('tabQna').classList.toggle('sel', t==='qna');
+  if(t==='qna') renderQna();
+  window.scrollTo({top:0});
+}
+$('tabDiary').addEventListener('click',()=>switchTab('diary'));
+$('tabQna').addEventListener('click',()=>switchTab('qna'));
+
+/* ---------- lightbox ---------- */
+const lb=$('lightbox');
+lb.addEventListener('click',()=>lb.classList.remove('on'));
+document.addEventListener('click',e=>{
+  const img=e.target;
+  if(img.tagName==='IMG' && (img.closest('#dtPhotos')||img.closest('#edPhotos'))){
+    $('lightboxImg').src=img.src; lb.classList.add('on');
+  }
+});
+
+/* ---------- swipe ---------- */
+let touchX=null,touchY=null;
+$('grid').addEventListener('touchstart',e=>{
+  touchX=e.touches[0].clientX; touchY=e.touches[0].clientY;
+},{passive:true});
+$('grid').addEventListener('touchend',e=>{
+  if(touchX===null) return;
+  const dx=e.changedTouches[0].clientX-touchX, dy=e.changedTouches[0].clientY-touchY;
+  if(Math.abs(dx)>55 && Math.abs(dx)>Math.abs(dy)*1.5){
+    if(dx<0){ viewM++; if(viewM>11){viewM=0;viewY++;} }
+    else { viewM--; if(viewM<0){viewM=11;viewY--;} }
+    render();
+  }
+  touchX=touchY=null;
+},{passive:true});
+
 /* ---------- sheets ---------- */
 function show(sheet){ $('overlay').classList.add('on'); sheet.classList.add('on'); }
-function closeSheets(){ $('overlay').classList.remove('on'); $('editorSheet').classList.remove('on'); $('detailSheet').classList.remove('on'); }
+function closeSheets(){ $('overlay').classList.remove('on'); ['editorSheet','detailSheet','qnaSheet'].forEach(id=>$(id).classList.remove('on')); }
 $('overlay').addEventListener('click',closeSheets);
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSheets(); });
 
-/* ---------- nav ---------- */
+/* ---------- month nav ---------- */
 $('prevBtn').addEventListener('click',()=>{ viewM--; if(viewM<0){viewM=11;viewY--;} render(); });
 $('nextBtn').addEventListener('click',()=>{ viewM++; if(viewM>11){viewM=0;viewY++;} render(); });
 $('todayBtn').addEventListener('click',()=>{ viewY=today.getFullYear(); viewM=today.getMonth(); render(); });
 
-/* ---------- backup ---------- */
+/* ---------- backup (diary + Q&A) ---------- */
 $('exportBtn').addEventListener('click',()=>{
-  const blob=new Blob([JSON.stringify(entries)],{type:'application/json'});
+  const blob=new Blob([JSON.stringify({entries, qna, version:2})],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download=`diary365-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.download=`only-girls-diary-backup-${new Date().toISOString().slice(0,10)}.json`;
   a.click(); URL.revokeObjectURL(a.href);
-  toast('백업 파일을 내려받았어');
+  toast('Backup downloaded');
 });
 $('importFile').addEventListener('change',ev=>{
   const f=ev.target.files[0]; if(!f) return;
@@ -529,12 +885,29 @@ $('importFile').addEventListener('change',ev=>{
   r.onload=()=>{
     try{
       const data=JSON.parse(r.result);
-      entries={...entries,...data}; store.save(entries); render();
-      toast('백업을 불러왔어 ✓');
-    }catch(e){ toast('백업 파일을 읽지 못했어'); }
+      if(data.version===2){ entries={...entries,...data.entries}; qna={...qna,...data.qna}; }
+      else { entries={...entries,...data}; } // old backup format
+      save(KEY,entries,memE); save(QKEY,qna,memQ);
+      render(); renderQna();
+      toast('Backup restored ✓');
+    }catch(e){ toast('Could not read that backup file'); }
   };
   r.readAsText(f); ev.target.value='';
 });
+
+/* ---------- font picker ---------- */
+function applyFont(f){
+  if(!['type','serif','script'].includes(f)) f='type';
+  document.body.classList.remove('f-serif','f-script');
+  if(f==='serif') document.body.classList.add('f-serif');
+  if(f==='script') document.body.classList.add('f-script');
+  document.querySelectorAll('.fontopt').forEach(b=>b.classList.toggle('sel', b.dataset.font===f));
+  try{ localStorage.setItem(FONT_KEY, f); }catch(e){}
+}
+document.querySelectorAll('.fontopt').forEach(b=>b.addEventListener('click',()=>applyFont(b.dataset.font)));
+let savedFont='type';
+try{ savedFont=localStorage.getItem(FONT_KEY)||'type'; }catch(e){}
+applyFont(savedFont);
 
 /* ---------- toast ---------- */
 let toastTimer;
@@ -543,111 +916,8 @@ function toast(msg){
   clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('on'),2200);
 }
 
-/* ---------- quotes ---------- */
-const QUOTES = [
-  "천천히 가도 괜찮아. 멈추지만 않으면 돼. — 공자",
-  "행복은 습관이다. 그것을 몸에 지녀라. — 허버드",
-  "가장 어두운 밤도 끝나고, 해는 떠오른다. — 빅토르 위고",
-  "삶이 있는 한 희망은 있다. — 키케로",
-  "오늘 걷지 않으면 내일은 뛰어야 한다.",
-  "작은 성취를 축하할 줄 아는 사람이 큰 일을 해낸다.",
-  "네가 세상에서 보고 싶은 변화가 되어라. — 간디",
-  "행동은 모든 성공의 가장 기초적인 열쇠다. — 피카소",
-  "지금 이 순간에도 나는 자라고 있다.",
-  "완벽한 때를 기다리지 마라. 때는 결코 완벽하지 않다. — 나폴레온 힐",
-  "쉬어가는 것도 여정의 일부다.",
-  "비교는 기쁨을 훔쳐가는 도둑이다. — 시어도어 루스벨트",
-  "어제의 나보다 나은 오늘의 나면 충분하다.",
-  "별을 보려면 어둠이 필요하다.",
-  "실패는 성공으로 가는 이정표다. — C.S. 루이스",
-  "당신이 할 수 있다고 믿든 없다고 믿든, 믿는 대로 된다. — 헨리 포드",
-  "기록은 기억을 이긴다.",
-  "가장 개인적인 것이 가장 창의적인 것이다. — 마틴 스코세이지",
-  "느린 것을 두려워하지 말고, 멈추는 것을 두려워하라. — 중국 속담",
-  "마음이 향하는 곳에 길이 있다.",
-  "무언가를 시작하기에 너무 늦은 때란 없다. — 조지 엘리엇",
-  "오늘 하루도 나에게 주어진 선물이다.",
-  "고요한 바다는 유능한 뱃사람을 만들지 못한다. — 아프리카 속담",
-  "글로 남긴 하루는 두 번 산 하루다.",
-  "자신을 사랑하는 법을 아는 것이 가장 위대한 사랑이다.",
-  "위대한 일은 작은 일들이 모여 이루어진다. — 반 고흐",
-  "내일은 내일의 태양이 뜬다. — 바람과 함께 사라지다",
-  "행복을 미루지 마라. 지금 여기에 있다.",
-  "산다는 것, 그것은 치열한 전투이다. — 로맹 롤랑",
-  "당신의 하루하루가 당신의 인생이 된다.",
-  "물이 깊을수록 소리가 없다.",
-  "지나간 일에 새 눈물을 낭비하지 마라. — 에우리피데스",
-  "한 걸음이라도 내디뎠다면 그날은 성공이다.",
-  "꾸준함은 재능을 이긴다.",
-  "당신이 웃으면 세상도 함께 웃는다.",
-  "쓸 말이 없는 날도, 살아낸 하루다."
-];
-let lastQuote = -1;
-function pickQuote(){
-  let i;
-  do { i = Math.floor(Math.random()*QUOTES.length); } while(i===lastQuote && QUOTES.length>1);
-  lastQuote = i;
-  $('quoteText').textContent = QUOTES[i];
-}
-$('quoteBtn').addEventListener('click',()=>{ pickQuote(); $('quoteBox').hidden=false; });
-$('quoteAgain').addEventListener('click',pickQuote);
-$('quoteClose').addEventListener('click',()=>$('quoteBox').hidden=true);
-$('quoteUse').addEventListener('click',()=>{
-  const q = $('quoteText').textContent;
-  const b = $('edBody');
-  b.value = b.value ? b.value.replace(/\s*$/,'') + '\n\n' + q : q;
-  toast('본문에 넣었어 ✓');
-});
-
-/* ---------- lightbox ---------- */
-const lb = $('lightbox');
-function openLightbox(src){ $('lightboxImg').src = src; lb.classList.add('on'); }
-lb.addEventListener('click',()=>{ lb.classList.remove('on'); });
-document.addEventListener('click',e=>{
-  const img = e.target;
-  if(img.tagName==='IMG' && (img.closest('#dtPhotos') || img.closest('#edPhotos'))){
-    openLightbox(img.src);
-  }
-});
-
-/* ---------- swipe (calendar) ---------- */
-let touchX=null, touchY=null;
-const gridEl = $('grid');
-gridEl.addEventListener('touchstart',e=>{
-  touchX = e.touches[0].clientX; touchY = e.touches[0].clientY;
-},{passive:true});
-gridEl.addEventListener('touchend',e=>{
-  if(touchX===null) return;
-  const dx = e.changedTouches[0].clientX - touchX;
-  const dy = e.changedTouches[0].clientY - touchY;
-  if(Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)*1.5){
-    if(dx < 0){ viewM++; if(viewM>11){viewM=0;viewY++;} }
-    else { viewM--; if(viewM<0){viewM=11;viewY--;} }
-    render();
-  }
-  touchX = touchY = null;
-},{passive:true});
-
-/* ---------- font picker ---------- */
-const FONT_KEY='diary365.font';
-function applyFont(f){
-  document.body.classList.remove('f-batang','f-gaegu');
-  if(f==='batang') document.body.classList.add('f-batang');
-  if(f==='gaegu') document.body.classList.add('f-gaegu');
-  document.querySelectorAll('.fontopt').forEach(b=>b.classList.toggle('sel', b.dataset.font===f));
-  try{ localStorage.setItem(FONT_KEY, f); }catch(e){}
-}
-document.querySelectorAll('.fontopt').forEach(b=>{
-  b.addEventListener('click',()=>applyFont(b.dataset.font));
-});
-let savedFont='plex';
-try{ savedFont = localStorage.getItem(FONT_KEY)||'plex'; }catch(e){}
-applyFont(savedFont);
-
 render();
-</script>
 
-<script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./sw.js').catch(()=>{});
