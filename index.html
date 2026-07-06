@@ -889,17 +889,33 @@ function closeSheets(){
   $('overlay').classList.remove('on');
   ['editorSheet','detailSheet','qnaSheet'].forEach(id=>{ $(id).classList.remove('on','full'); });
 }
-/* drag the handle: up = fullscreen, down = shrink or close */
+/* swipe anywhere on the sheet: up = fullscreen, down (at top) = shrink or close */
 ['editorSheet','detailSheet','qnaSheet'].forEach(id=>{
   const sheet=$(id), grab=sheet.querySelector('.grab');
-  let startY=null;
-  grab.addEventListener('touchstart',e=>{ startY=e.touches[0].clientY; },{passive:true});
-  grab.addEventListener('touchend',e=>{
+  let startY=null, startTop=0, expanded=false;
+  sheet.addEventListener('touchstart',e=>{
+    startY=e.touches[0].clientY;
+    startTop=sheet.scrollTop;
+    expanded=false;
+  },{passive:true});
+  sheet.addEventListener('touchmove',e=>{
+    if(startY===null || expanded) return;
+    const dy=e.touches[0].clientY-startY;
+    // 위로 스와이프 → 즉시 풀스크린 확장
+    if(dy < -25 && !sheet.classList.contains('full')){
+      sheet.classList.add('full');
+      expanded=true;
+    }
+  },{passive:true});
+  sheet.addEventListener('touchend',e=>{
     if(startY===null) return;
     const dy=e.changedTouches[0].clientY-startY;
-    if(dy < -40) sheet.classList.add('full');
-    else if(dy > 40){ if(sheet.classList.contains('full')) sheet.classList.remove('full'); else closeSheets(); }
-    startY=null;
+    // 맨 위에서 아래로 스와이프 → 축소, 한 번 더 → 닫기
+    if(!expanded && dy > 60 && startTop<=0 && sheet.scrollTop<=0){
+      if(sheet.classList.contains('full')) sheet.classList.remove('full');
+      else closeSheets();
+    }
+    startY=null; expanded=false;
   },{passive:true});
   grab.addEventListener('click',()=>sheet.classList.toggle('full'));
 });
