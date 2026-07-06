@@ -220,10 +220,20 @@ button{font-family:inherit;color:var(--ink);cursor:pointer;border:none;backgroun
   border-top:2px solid var(--red);
 }
 .sheet.on{transform:translate(-50%,0)}
+.sheet.full{max-height:100dvh;height:100dvh;border-radius:0;border-top-color:transparent}
+.grab{cursor:grab}
 .grab{width:40px;height:3px;border-radius:2px;background:var(--line);margin:0 auto 14px}
 .sheet .dt{font-family:var(--display);font-style:italic;font-size:1.1rem;color:var(--red-deep);margin-bottom:2px}
 .sheet .sub{font-size:.72rem;color:var(--sub);margin-bottom:14px}
 
+.daterow{display:flex;align-items:center;gap:9px;margin:2px 0 10px}
+.datelabel{font-size:.64rem;color:var(--red);letter-spacing:.15em;text-transform:uppercase}
+input[type=date]{
+  background:var(--paper2);border:1px solid var(--line);border-radius:8px;
+  padding:6px 10px;font-family:inherit;font-size:.8rem;color:var(--ink);outline:none;
+  -webkit-appearance:none;appearance:none;
+}
+input[type=date]:focus{border-color:var(--red)}
 .moodrow{display:flex;justify-content:space-between;gap:5px;margin-bottom:16px}
 .moodopt{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:8px 0;border-radius:8px;border:1px solid transparent}
 .moodopt .face{width:36px;height:36px}
@@ -370,6 +380,10 @@ textarea{
 <div class="sheet" id="editorSheet">
   <div class="grab"></div>
   <div class="dt" id="edDate"></div>
+  <div class="daterow">
+    <span class="datelabel">Date</span>
+    <input type="date" id="edMoveDate">
+  </div>
   <div class="sub">How was this day?</div>
   <div class="moodrow" id="moodRow"></div>
   <div class="fieldlabel"><span>One-line summary</span><span class="cnt" id="olCount">0/40</span></div>
@@ -545,6 +559,7 @@ function openEditor(k){
   $('olCount').textContent = `${$('edOneline').value.length}/40`;
   $('delBtn').style.display = e ? 'block' : 'none';
   $('quoteBox').hidden = true;
+  $('edMoveDate').value = k;
   buildMoodRow(); renderEditPhotos();
   closeSheets(); show($('editorSheet'));
 }
@@ -586,9 +601,18 @@ $('saveBtn').addEventListener('click',()=>{
   const oneline=$('edOneline').value.trim();
   const body=$('edBody').value.trim();
   if(!oneline && !body && !editPhotos.length){ toast('Even one line, or one photo, will do!'); return; }
-  entries[editKey]={ mood:selMood, oneline, body, photos:editPhotos, updated:Date.now() };
+  const newKey = $('edMoveDate').value || editKey;
+  if(newKey !== editKey && entries[newKey]){
+    toast('That day already has an entry — pick another date.');
+    return;
+  }
+  if(newKey !== editKey) delete entries[editKey];
+  entries[newKey]={ mood:selMood, oneline, body, photos:editPhotos, updated:Date.now() };
   save(KEY, entries, memE);
-  closeSheets(); render(); toast('Saved ✓');
+  // 이동한 달로 화면 전환
+  const [ny,nm]=newKey.split('-').map(Number);
+  viewY=ny; viewM=nm-1;
+  closeSheets(); render(); toast(newKey!==editKey ? 'Saved & moved ✓' : 'Saved ✓');
 });
 $('delBtn').addEventListener('click',()=>{
   if(!confirm('Delete this day\'s entry?')) return;
@@ -861,7 +885,24 @@ $('grid').addEventListener('touchend',e=>{
 
 /* ---------- sheets ---------- */
 function show(sheet){ $('overlay').classList.add('on'); sheet.classList.add('on'); }
-function closeSheets(){ $('overlay').classList.remove('on'); ['editorSheet','detailSheet','qnaSheet'].forEach(id=>$(id).classList.remove('on')); }
+function closeSheets(){
+  $('overlay').classList.remove('on');
+  ['editorSheet','detailSheet','qnaSheet'].forEach(id=>{ $(id).classList.remove('on','full'); });
+}
+/* drag the handle: up = fullscreen, down = shrink or close */
+['editorSheet','detailSheet','qnaSheet'].forEach(id=>{
+  const sheet=$(id), grab=sheet.querySelector('.grab');
+  let startY=null;
+  grab.addEventListener('touchstart',e=>{ startY=e.touches[0].clientY; },{passive:true});
+  grab.addEventListener('touchend',e=>{
+    if(startY===null) return;
+    const dy=e.changedTouches[0].clientY-startY;
+    if(dy < -40) sheet.classList.add('full');
+    else if(dy > 40){ if(sheet.classList.contains('full')) sheet.classList.remove('full'); else closeSheets(); }
+    startY=null;
+  },{passive:true});
+  grab.addEventListener('click',()=>sheet.classList.toggle('full'));
+});
 $('overlay').addEventListener('click',closeSheets);
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeSheets(); });
 
