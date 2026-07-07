@@ -655,43 +655,159 @@ $('editBtn').addEventListener('click',()=>openEditor(detailKey));
 
 /* ---------- quotes ---------- */
 const QUOTES = [
-  "Slow is fine, as long as you don't stop. — Confucius",
-  "The darkest night ends, and the sun rises. — Victor Hugo",
-  "While there's life, there's hope. — Cicero",
-  "Happiness is a habit — cultivate it. — Elbert Hubbard",
-  "Comparison is the thief of joy. — Theodore Roosevelt",
-  "Be the change you wish to see in the world. — Gandhi",
-  "Action is the foundational key to all success. — Picasso",
-  "Don't wait for the perfect moment; it never comes. — Napoleon Hill",
-  "Resting is part of the journey, too.",
-  "Better than yesterday's me is more than enough.",
-  "You need darkness to see the stars.",
-  "Failures are finger posts on the road to achievement. — C.S. Lewis",
-  "Whether you think you can or you can't, you're right. — Henry Ford",
-  "Written words outlast memory.",
-  "The most personal is the most creative. — Martin Scorsese",
-  "Fear not slowness, fear standing still. — Chinese proverb",
-  "It is never too late to be what you might have been. — George Eliot",
-  "Today is a gift — that's why it's called the present.",
-  "A smooth sea never made a skilled sailor. — African proverb",
-  "A day written down is a day lived twice.",
-  "To love oneself is the beginning of a lifelong romance. — Oscar Wilde",
-  "Great things are done by a series of small things. — Van Gogh",
-  "After all, tomorrow is another day. — Gone with the Wind",
-  "Don't postpone joy. It lives here, now.",
-  "Your days, one by one, become your life.",
-  "Deep waters make no sound.",
-  "Waste no fresh tears over old griefs. — Euripides",
-  "One small step forward still counts as a good day.",
-  "Consistency beats talent.",
-  "A day with nothing to write is still a day fully lived."
+"Slow is fine, as long as you don't stop. — Confucius",
+"The darkest night ends, and the sun rises. — Victor Hugo",
+"While there's life, there's hope. — Cicero",
+"Happiness is a habit — cultivate it. — Elbert Hubbard",
+"Comparison is the thief of joy. — Theodore Roosevelt",
+"Be the change you wish to see in the world. — Gandhi",
+"Action is the foundational key to all success. — Picasso",
+"Don't wait for the perfect moment; it never comes. — Napoleon Hill",
+"Resting is part of the journey, too.",
+"Better than yesterday's me is more than enough.",
+"You need darkness to see the stars.",
+"Failures are finger posts on the road to achievement. — C.S. Lewis",
+"Whether you think you can or you can't, you're right. — Henry Ford",
+"Written words outlast memory.",
+"The most personal is the most creative. — Martin Scorsese",
+"Fear not slowness, fear standing still. — Chinese proverb",
+"It is never too late to be what you might have been. — George Eliot",
+"Today is a gift — that's why it's called the present.",
+"A smooth sea never made a skilled sailor. — African proverb",
+"A day written down is a day lived twice.",
+"To love oneself is the beginning of a lifelong romance. — Oscar Wilde",
+"Great things are done by a series of small things. — Van Gogh",
+"After all, tomorrow is another day. — Gone with the Wind",
+"Don't postpone joy. It lives here, now.",
+"Your days, one by one, become your life.",
+"Deep waters make no sound.",
+"Waste no fresh tears over old griefs. — Euripides",
+"One small step forward still counts as a good day.",
+"Consistency beats talent.",
+"A day with nothing to write is still a day fully lived.",
+"Turn your wounds into wisdom. — Oprah Winfrey",
+"What we think, we become. — Buddha",
+"Everything you can imagine is real. — Picasso",
+"No mud, no lotus. — Thich Nhat Hanh",
+"She believed she could, so she did.",
+"The best way out is always through. — Robert Frost",
+"Nothing will work unless you do. — Maya Angelou",
+"You are enough, just as you are.",
+"Storms make trees take deeper roots. — Dolly Parton",
+"Do small things with great love. — Mother Teresa",
+"Well begun is half done. — Aristotle",
+"The obstacle is the way. — Marcus Aurelius",
+"What you seek is seeking you. — Rumi",
+"Wherever you go, go with all your heart. — Confucius",
+"Joy is not in things; it is in us. — Richard Wagner",
+"The quieter you become, the more you can hear. — Ram Dass",
+"Bloom where you are planted.",
+"Little by little, one travels far. — Tolkien (attributed)",
+"Courage is grace under pressure. — Hemingway",
+"We are what we repeatedly do. — Will Durant",
+"Live the questions now. — Rilke",
+"Not all those who wander are lost. — Tolkien",
+"Simplicity is the ultimate sophistication. — Leonardo da Vinci",
+"The unexamined life is not worth living. — Socrates",
+"Light tomorrow with today. — Elizabeth Barrett Browning",
+"Hope is the thing with feathers. — Emily Dickinson",
+"Beauty begins the moment you decide to be yourself. — Coco Chanel",
+"If you're going through hell, keep going. — Winston Churchill (attributed)",
+"Every day may not be good, but there's good in every day.",
+"You can't pour from an empty cup — rest first.",
+"The days are long, but the years are short. — Gretchen Rubin",
+"Almost everything works again if you unplug it — including you. — Anne Lamott",
+"Done is better than perfect.",
+"Feelings are visitors; let them come and go. — Mooji",
+"You don't have to see the whole staircase, just take the first step. — MLK Jr.",
+"Where flowers bloom, so does hope. — Lady Bird Johnson",
+"How we spend our days is how we spend our lives. — Annie Dillard",
+"Trust the timing of your life.",
+"A year from now you may wish you had started today. — Karen Lamb",
+"Enjoy the little things; one day they'll be the big things. — Robert Brault",
+"What is done in love is done well. — Van Gogh",
+"To live is the rarest thing in the world. — Oscar Wilde",
+"Adopt the pace of nature: her secret is patience. — Emerson",
+"The soul is dyed the color of its thoughts. — Marcus Aurelius (attributed)",
+"Life shrinks or expands in proportion to one's courage. — Anaïs Nin",
+"We write to taste life twice. — Anaïs Nin",
+"Forever is composed of nows. — Emily Dickinson",
+"Perhaps this is the moment for which you were created. — Esther 4:14",
+"Let your faith be bigger than your fear.",
+"Gratitude turns what we have into enough.",
+"Softness is not weakness.",
+"Growth is quiet — you rarely notice it happening.",
+"You survived 100% of your worst days so far.",
+"Some days you just have to create your own sunshine.",
+"An early-morning walk is a blessing for the whole day. — Thoreau",
+"Ordinary life, closely watched, is extraordinary.",
+"Keep some room in your heart for the unimaginable. — Mary Oliver",
+"Tell me, what is it you plan to do with your one wild and precious life? — Mary Oliver",
+"Attention is the beginning of devotion. — Mary Oliver",
+"The cure for anything is salt water: sweat, tears, or the sea. — Isak Dinesen",
+"Nothing behind me, everything ahead of me. — Jack Kerouac",
+"And still, I rise. — Maya Angelou",
+"My mission in life is not merely to survive, but to thrive. — Maya Angelou",
+"Above all, be the heroine of your life. — Nora Ephron",
+"Fill your paper with the breathings of your heart. — Wordsworth",
+"One can never have enough socks — or quiet evenings.",
+"Normality is a paved road: comfortable, but no flowers grow. — Van Gogh",
+"I am not afraid of storms, for I am learning how to sail my ship. — Louisa May Alcott",
+"It's a good day to have a good day.",
+"Your future self is watching you right now through memories.",
+"Whatever you are, be a good one. — Lincoln (attributed)",
+"Life is short, but it is wide.",
+"Slow down and everything you are chasing will come around and catch you.",
+"Even the longest winter turns to spring.",
+"Collect moments, not things.",
+"A gentle answer is a strength, not a surrender.",
+"Today's small kindness is tomorrow's warm memory.",
+"You are allowed to be both a masterpiece and a work in progress.",
+"Rest is productive too.",
+"Your pace is your own; the road doesn't mind.",
+"Handwritten days become heirlooms.",
+"Somewhere, something incredible is waiting to be known. — Carl Sagan",
+"Stars can't shine without darkness.",
+"Old ways won't open new doors.",
+"Silence is sometimes the best answer.",
+"A calm sea reflects the sky best.",
+"Begin anywhere. — John Cage",
+"Make it a September to remember — or any month, really.",
+"The little things? The little moments? They aren't little. — Jon Kabat-Zinn"
 ];
-let lastQuote=-1;
-function pickQuote(){
-  let i;
-  do { i=Math.floor(Math.random()*QUOTES.length); } while(i===lastQuote && QUOTES.length>1);
-  lastQuote=i;
-  $('quoteText').textContent = QUOTES[i];
+/* online-first: 인터넷에서 매번 새 명언을 받아오고(사실상 무한),
+   실패 시에만 내장 목록에서 중복 없이 뽑음 */
+const SEEN_KEY='diary365.quotesSeen';
+let seenQuotes=[];
+try{ seenQuotes = JSON.parse(localStorage.getItem(SEEN_KEY)||'[]'); }catch(e){}
+function pickLocalQuote(){
+  let pool = QUOTES.map((_,i)=>i).filter(i=>!seenQuotes.includes(i));
+  if(!pool.length){ seenQuotes=[]; pool = QUOTES.map((_,i)=>i); }
+  const i = pool[Math.floor(Math.random()*pool.length)];
+  seenQuotes.push(i);
+  try{ localStorage.setItem(SEEN_KEY, JSON.stringify(seenQuotes)); }catch(e){}
+  return QUOTES[i];
+}
+let quoteReq = 0;
+async function pickQuote(){
+  const req = ++quoteReq;
+  $('quoteText').textContent = '. . .';
+  try{
+    const ctrl = new AbortController();
+    const timer = setTimeout(()=>ctrl.abort(), 4000);
+    const r = await fetch('https://dummyjson.com/quotes/random', {signal:ctrl.signal});
+    clearTimeout(timer);
+    const d = await r.json();
+    if(req !== quoteReq) return; // 그 사이 다시 뽑았으면 무시
+    if(d && d.quote){
+      $('quoteText').textContent = `${d.quote} — ${d.author}`;
+      return;
+    }
+    throw new Error('bad response');
+  }catch(e){
+    if(req !== quoteReq) return;
+    $('quoteText').textContent = pickLocalQuote(); // 오프라인/실패 시 내장 목록
+  }
 }
 $('quoteBtn').addEventListener('click',()=>{ pickQuote(); $('quoteBox').hidden=false; });
 $('quoteAgain').addEventListener('click',pickQuote);
